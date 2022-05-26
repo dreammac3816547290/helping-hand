@@ -1,8 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { configureStore } from "@reduxjs/toolkit";
 
-export const store = configureStore({
+import intangibleRequestSlice from "../features/intangibleRequest/intangibleRequestSlice";
+import tangibleRequestSlice from "../features/tangibleRequest/tangibleRequestSlice";
+
+export default configureStore({
   reducer: {
-    counter: counterReducer,
+    tangibleRequest: tangibleRequestSlice,
+    intangibleRequest: intangibleRequestSlice,
   },
 });
