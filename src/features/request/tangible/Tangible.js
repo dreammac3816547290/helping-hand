@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Tangible() {
   const tangibleList = useSelector((state) => state.request.tangible.public);
-  return tangibleList.map((request) => (
+  const tangibleRequestList = tangibleList.map((request) => (
     <Link to={`/request/tangible/${request.id}`}>
       <div>
         <h1>{request.title}</h1>
@@ -11,4 +11,5 @@ export default function Tangible() {
       </div>
     </Link>
   ));
+  return tangibleRequestList;
 }

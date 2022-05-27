@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 export default function Public() {
-  const [isIntangible, setIsIntangible] = useState(true);
+  const path = useLocation().pathname;
+  const [isIntangible, setIsIntangible] = useState(
+    path.startsWith("/public/intangible")
+  );
   return (
     <>
       <Link to={`/public/${isIntangible ? "tangible" : "intangible"}`}>

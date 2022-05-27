@@ -33,7 +33,13 @@ const initialState = {
 const intangibleSlice = createSlice({
   name: "intangible",
   initialState,
-  reducers: {},
+  reducers: {
+    addIntangible(state, action) {
+      state.public.push({ id: 0, requesterId: 0, ...action.payload });
+    },
+  },
 });
+
+export const { addIntangible } = intangibleSlice.actions;
 
 export default intangibleSlice.reducer;

@@ -30,7 +30,9 @@ export default function Self() {
           </div>
         </Link>
       ))}
-      <button>+</button>
+      <Link to="/add">
+        <button>+</button>
+      </Link>
     </>
   );
 }

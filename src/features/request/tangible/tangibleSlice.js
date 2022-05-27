@@ -33,7 +33,13 @@ const initialState = {
 const tangibleSlice = createSlice({
   name: "tangible",
   initialState,
-  reducers: {},
+  reducers: {
+    addTangible(state, action) {
+      state.public.push({ id: 0, requesterId: 0, ...action.payload });
+    },
+  },
 });
+
+export const { addTangible } = tangibleSlice.actions;
 
 export default tangibleSlice.reducer;

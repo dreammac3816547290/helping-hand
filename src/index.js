@@ -17,6 +17,10 @@ import Tangible from "./features/request/tangible/Tangible";
 import IntangiblePage from "./features/request/intangible/IntangiblePage";
 import TangiblePage from "./features/request/tangible/TangiblePage";
 
+import AddRequest from "./features/request/AddRequest";
+import AddIntangible from "./features/request/intangible/AddIntangible";
+import AddTangible from "./features/request/tangible/AddTangible";
+
 const container = document.getElementById("root");
 const root = createRoot(container);
 
@@ -38,6 +42,10 @@ root.render(
                 element={<IntangiblePage />}
               />
               <Route path="tangible/:requestId" element={<TangiblePage />} />
+            </Route>
+            <Route path="add" element={<AddRequest />}>
+              <Route path="intangible" element={<AddIntangible />} />
+              <Route path="tangible" element={<AddTangible />} />
             </Route>
           </Route>
         </Routes>
