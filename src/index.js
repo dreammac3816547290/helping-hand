@@ -6,9 +6,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TangibleRequest from "./components/TangibleRequest";
-import IntangibleRequest from "./components/IntangibleRequest";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+
+import Public from "./components/Public";
+import Followed from "./components/Followed";
+import Self from "./components/Self";
+
+import Intangible from "./features/request/intangible/Intangible";
+import Tangible from "./features/request/tangible/Tangible";
+import IntangiblePage from "./features/request/intangible/IntangiblePage";
+import TangiblePage from "./features/request/tangible/TangiblePage";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -19,12 +26,22 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route path="intangibleRequest" element={<IntangibleRequest />} />
-            <Route path="tangibleRequest" element={<TangibleRequest />} />
+            <Route path="public" element={<Public />}>
+              <Route path="intangible" element={<Intangible />} />
+              <Route path="tangible" element={<Tangible />} />
+            </Route>
+            <Route path="followed" element={<Followed />} />
+            <Route path="self" element={<Self />} />
+            <Route path="request" element={<Outlet />}>
+              <Route
+                path="intangible/:requestId"
+                element={<IntangiblePage />}
+              />
+              <Route path="tangible/:requestId" element={<TangiblePage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
-      <App />
     </Provider>
   </React.StrictMode>
 );

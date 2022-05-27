@@ -1,11 +1,15 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-import intangibleRequestSlice from "../features/intangibleRequest/intangibleRequestSlice";
-import tangibleRequestSlice from "../features/tangibleRequest/tangibleRequestSlice";
+import intangibleReducer from "../features/request/intangible/intangibleSlice";
+import tangibleReducer from "../features/request/tangible/tangibleSlice";
+import userReducer from "../features/user/userSlice";
 
 export default configureStore({
   reducer: {
-    tangibleRequest: tangibleRequestSlice,
-    intangibleRequest: intangibleRequestSlice,
+    request: combineReducers({
+      intangible: intangibleReducer,
+      tangible: tangibleReducer,
+    }),
+    user: userReducer,
   },
 });
