@@ -9,15 +9,17 @@ export default function Sign() {
   const [password, setPassword] = useState("");
   const canAdd = email && password.length >= 6; // check email & password
   return (
-    <>
+    <div>
       <input
         type="email"
+        placeholder="Email"
         value={email}
         onChange={(event) => setEmail(event.target.value)}
       />
       <br />
       <input
         type="password"
+        placeholder="Password"
         value={password}
         onChange={(event) => setPassword(event.target.value)}
       />
@@ -40,6 +42,6 @@ export default function Sign() {
       >
         Sign In
       </button>
-    </>
+    </div>
   );
 }
