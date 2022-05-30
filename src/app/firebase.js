@@ -2,8 +2,14 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+
+import { useDispatch, useSelector } from "react-redux";
+import { getIntangible } from "../features/request/intangible/intangibleSlice";
+import { getTangible } from "../features/request/tangible/tangibleSlice";
+import { setUserId } from "../features/user/userSlice";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -54,9 +60,70 @@ onAuthStateChanged(auth, (user) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     const uid = user.uid;
+    dispatch(setUserId(uid));
     // ...
   } else {
     // User is signed out
     // ...
   }
 });
+
+const db = getFirestore(app);
+
+export function getFirebaseIntangible() {
+  db.collection("intangible")
+    .get()
+    .then((querySnapshot) => {
+      const dispatch = useDispatch();
+      dispatch(
+        getIntangible(
+          querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+        )
+      );
+      //   querySnapshot.forEach((doc) => {
+      //     console.log(`${doc.id} => ${doc.data()}`);
+      //   });
+    });
+}
+
+export function addIntangible(request) {
+  const userId = useSelector((state) => state.user.self);
+  db.collection("intangible")
+    .add({ requesterId: userId, ...request })
+    .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+      getFirebaseIntangible();
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
+}
+
+export function getFirebaseTangible() {
+  db.collection("tangible")
+    .get()
+    .then((querySnapshot) => {
+      const dispatch = useDispatch();
+      dispatch(
+        getTangible(
+          querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+        )
+      );
+      //   querySnapshot.forEach((doc) => {
+      //     console.log(`${doc.id} => ${doc.data()}`);
+      //   });
+    });
+}
+
+export function addTangible(request) {
+  const userId = useSelector((state) => state.user.self);
+  db.collection("tangible")
+    .add({ requesterId: userId, ...request })
+    .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+      getFirebaseTangible();
+    })
+    .catch((error) => {
+      console.error("Error adding document: ", error);
+    });
+}

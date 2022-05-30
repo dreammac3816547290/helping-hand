@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 export default function Self() {
   const intangibleList = useSelector((state) =>
     state.request.intangible.public.filter(
-      (request) => request.requesterId === 0
+      (request) => request.requesterId === state.user.userId
     )
   );
   const tangibleList = useSelector((state) =>
-    state.request.tangible.public.filter((request) => request.requesterId === 0)
+    state.request.tangible.public.filter(
+      (request) => request.requesterId === state.user.userId
+    )
   );
   return (
     <>

@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { addTangible } from "./tangibleSlice";
+// import { addTangible } from "./tangibleSlice";
+import { addTangible } from "../../../app/firebase";
 
 export default function AddTangible() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -34,7 +35,7 @@ export default function AddTangible() {
       <br />
       <button
         onClick={() => {
-          dispatch(addTangible({ title, description, dateTime }));
+          addTangible({ title, description, dateTime });
           navigate("/");
         }}
       >

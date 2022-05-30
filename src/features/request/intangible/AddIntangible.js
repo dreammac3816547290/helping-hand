@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { addIntangible } from "./intangibleSlice";
+// import { addIntangible } from "./intangibleSlice";
+import { addIntangible } from "../../../app/firebase";
 
 export default function AddIntangible() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -26,7 +27,7 @@ export default function AddIntangible() {
       <br />
       <button
         onClick={() => {
-          dispatch(addIntangible({ title, description }));
+          addIntangible({ title, description });
           navigate("/");
         }}
       >
