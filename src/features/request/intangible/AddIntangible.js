@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { useDispatch } from "react-redux";
+import { useSelector /* , useDispatch */ } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // import { addIntangible } from "./intangibleSlice";
@@ -10,6 +10,10 @@ export default function AddIntangible() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const userId = useSelector((state) => state.user.userId);
+  const canAdd = title && description && userId;
+  // check if title, description is not empty
+  // check if userId exist
   return (
     <div>
       <input
@@ -27,8 +31,10 @@ export default function AddIntangible() {
       <br />
       <button
         onClick={() => {
-          addIntangible({ title, description });
-          navigate("/");
+          if (canAdd) {
+            addIntangible({ requesterId: userId, title, description });
+            navigate("/");
+          }
         }}
       >
         Add Request

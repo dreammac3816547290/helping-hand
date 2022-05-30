@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 // import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +12,10 @@ export default function AddTangible() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dateTime, setDateTime] = useState(); // date now to string
-  // check if title is not empty
+  const userId = useSelector((state) => state.user.userId);
+  const canAdd = title && description && dateTime && userId;
+  // check if title, description, dateTime is not empty
+  // check if userId exist
   return (
     <div>
       <input
@@ -35,8 +39,10 @@ export default function AddTangible() {
       <br />
       <button
         onClick={() => {
-          addTangible({ title, description, dateTime });
-          navigate("/");
+          if (canAdd) {
+            addTangible({ requesterId: userId, title, description, dateTime });
+            navigate("/");
+          }
         }}
       >
         Add Request

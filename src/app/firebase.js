@@ -1,12 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getIntangible } from "../features/request/intangible/intangibleSlice";
 import { getTangible } from "../features/request/tangible/tangibleSlice";
 import { setUserId } from "../features/user/userSlice";
@@ -60,6 +65,7 @@ onAuthStateChanged(auth, (user) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     const uid = user.uid;
+    const dispatch = useDispatch();
     dispatch(setUserId(uid));
     // ...
   } else {
@@ -87,9 +93,8 @@ export function getFirebaseIntangible() {
 }
 
 export function addIntangible(request) {
-  const userId = useSelector((state) => state.user.self);
   db.collection("intangible")
-    .add({ requesterId: userId, ...request })
+    .add(request)
     .then((docRef) => {
       console.log("Document written with ID: ", docRef.id);
       getFirebaseIntangible();
@@ -116,9 +121,8 @@ export function getFirebaseTangible() {
 }
 
 export function addTangible(request) {
-  const userId = useSelector((state) => state.user.self);
   db.collection("tangible")
-    .add({ requesterId: userId, ...request })
+    .add(request)
     .then((docRef) => {
       console.log("Document written with ID: ", docRef.id);
       getFirebaseTangible();
