@@ -7,11 +7,12 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
+import store from "./store";
 import { getIntangible } from "../features/request/intangible/intangibleSlice";
 import { getTangible } from "../features/request/tangible/tangibleSlice";
 import { setUserId } from "../features/user/userSlice";
@@ -65,8 +66,9 @@ onAuthStateChanged(auth, (user) => {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     const uid = user.uid;
-    const dispatch = useDispatch();
-    dispatch(setUserId(uid));
+    store.dispatch(setUserId(uid));
+    // const dispatch = useDispatch();
+    // dispatch(setUserId(uid));
     // ...
   } else {
     // User is signed out
@@ -76,58 +78,84 @@ onAuthStateChanged(auth, (user) => {
 
 const db = getFirestore(app);
 
-export function getFirebaseIntangible() {
-  db.collection("intangible")
-    .get()
-    .then((querySnapshot) => {
-      const dispatch = useDispatch();
-      dispatch(
-        getIntangible(
-          querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-        )
-      );
-      //   querySnapshot.forEach((doc) => {
-      //     console.log(`${doc.id} => ${doc.data()}`);
-      //   });
-    });
-}
+export const getFirebaseIntangible = () => async (dispatch) => {
+  const querySnapshot = await getDocs(collection(db, "intangible"));
+  dispatch(
+    getIntangible(
+      querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+    )
+  );
+  //   db.collection("intangible")
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       const dispatch = useDispatch();
+  //       dispatch(
+  //         getIntangible(
+  //           querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+  //         )
+  //       );
+  //       //   querySnapshot.forEach((doc) => {
+  //       //     console.log(`${doc.id} => ${doc.data()}`);
+  //       //   });
+  //     });
+};
 
-export function addIntangible(request) {
-  db.collection("intangible")
-    .add(request)
-    .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
-      getFirebaseIntangible();
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    });
-}
+export const addIntangible = (request) => async (dispatch) => {
+  try {
+    const docRef = await addDoc(collection(db, "intangible"), request);
+    console.log("Document written with ID: ", docRef.id);
+    // dispatch(getFirebaseIntangible()); // refresh
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+  //   db.collection("intangible")
+  //     .add(request)
+  //     .then((docRef) => {
+  //       console.log("Document written with ID: ", docRef.id);
+  //       getFirebaseIntangible();
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error adding document: ", error);
+  //     });
+};
 
-export function getFirebaseTangible() {
-  db.collection("tangible")
-    .get()
-    .then((querySnapshot) => {
-      const dispatch = useDispatch();
-      dispatch(
-        getTangible(
-          querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-        )
-      );
-      //   querySnapshot.forEach((doc) => {
-      //     console.log(`${doc.id} => ${doc.data()}`);
-      //   });
-    });
-}
+export const getFirebaseTangible = () => async (dispatch) => {
+  const querySnapshot = await getDocs(collection(db, "tangible"));
+  dispatch(
+    getTangible(
+      querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+    )
+  );
+  //   db.collection("tangible")
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       const dispatch = useDispatch();
+  //       dispatch(
+  //         getTangible(
+  //           querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
+  //         )
+  //       );
+  //       //   querySnapshot.forEach((doc) => {
+  //       //     console.log(`${doc.id} => ${doc.data()}`);
+  //       //   });
+  //     });
+};
 
-export function addTangible(request) {
-  db.collection("tangible")
-    .add(request)
-    .then((docRef) => {
-      console.log("Document written with ID: ", docRef.id);
-      getFirebaseTangible();
-    })
-    .catch((error) => {
-      console.error("Error adding document: ", error);
-    });
-}
+export const addTangible = (request) => async (dispatch) => {
+  try {
+    const docRef = await addDoc(collection(db, "tangible"), request);
+    console.log("Document written with ID: ", docRef.id);
+    // dispatch(getFirebaseTangible()); // refresh
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+  //   db.collection("tangible")
+  //     .add(request)
+  //     .then((docRef) => {
+  //       console.log("Document written with ID: ", docRef.id);
+  //       getFirebaseTangible();
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error adding document: ", error);
+  //     });
+};

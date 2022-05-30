@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-// import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // import { addTangible } from "./tangibleSlice";
 import { addTangible } from "../../../app/firebase";
 
 export default function AddTangible() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [dateTime, setDateTime] = useState(); // date now to string
+  const [dateTime, setDateTime] = useState(""); // date now to string
   const userId = useSelector((state) => state.user.userId);
   const canAdd = title && description && dateTime && userId;
   // check if title, description, dateTime is not empty
@@ -40,7 +39,9 @@ export default function AddTangible() {
       <button
         onClick={() => {
           if (canAdd) {
-            addTangible({ requesterId: userId, title, description, dateTime });
+            dispatch(
+              addTangible({ requesterId: userId, title, description, dateTime })
+            );
             navigate("/");
           }
         }}

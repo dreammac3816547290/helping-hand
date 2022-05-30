@@ -10,7 +10,7 @@ function useTangible(id) {
 
 export default function TangiblePage() {
   const params = useParams();
-  const request = useTangible(Number(params.requestId));
+  const request = useTangible(params.requestId);
   return (
     <>
       <h1>{request.title}</h1>

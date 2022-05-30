@@ -10,7 +10,7 @@ function useIntangible(id) {
 
 export default function IntangiblePage() {
   const params = useParams();
-  const request = useIntangible(Number(params.requestId));
+  const request = useIntangible(params.requestId);
   return (
     <>
       <h1>{request.title}</h1>

@@ -8,6 +8,7 @@ import "./index.css";
 
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
+import Sign from "./components/Sign";
 import Public from "./components/Public";
 import Followed from "./components/Followed";
 import Self from "./components/Self";
@@ -30,6 +31,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
+            <Route path="sign" element={<Sign />} />
             <Route path="public" element={<Public />}>
               <Route path="intangible" element={<Intangible />} />
               <Route path="tangible" element={<Tangible />} />

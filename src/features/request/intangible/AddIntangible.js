@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useSelector /* , useDispatch */ } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // import { addIntangible } from "./intangibleSlice";
 import { addIntangible } from "../../../app/firebase";
 
 export default function AddIntangible() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -32,7 +32,9 @@ export default function AddIntangible() {
       <button
         onClick={() => {
           if (canAdd) {
-            addIntangible({ requesterId: userId, title, description });
+            dispatch(
+              addIntangible({ requesterId: userId, title, description })
+            );
             navigate("/");
           }
         }}
