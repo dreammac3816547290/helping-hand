@@ -10,16 +10,20 @@ export default function AddIntangible() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   return (
-    <>
+    <div>
       <input
         type="text"
+        placeholder="Title"
         value={title}
         onChange={(event) => setTitle(event.target.value)}
       />
+      <br />
       <textarea
+        placeholder="Description"
         value={description}
         onChange={(event) => setDescription(event.target.value)}
       />
+      <br />
       <button
         onClick={() => {
           dispatch(addIntangible({ title, description }));
@@ -28,6 +32,6 @@ export default function AddIntangible() {
       >
         Add Request
       </button>
-    </>
+    </div>
   );
 }

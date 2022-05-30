@@ -15,6 +15,7 @@ export default function TangiblePage() {
     <>
       <h1>{request.title}</h1>
       <p>{request.description}</p>
+      <p>{request.dateTime}</p>
     </>
   );
 }

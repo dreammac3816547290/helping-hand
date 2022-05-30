@@ -27,6 +27,7 @@ export default function Self() {
           <div>
             <h1>{request.title}</h1>
             <p>{request.description}</p>
+            <p>{request.dateTime}</p>
           </div>
         </Link>
       ))}
