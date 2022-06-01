@@ -7,9 +7,10 @@ export default function Intangible() {
   );
   const intangibleRequestList = intangibleList.map((request) => (
     <Link to={`/request/intangible/${request.id}`}>
-      <div>
+      <div className="request-in-list">
         <h1>{request.title}</h1>
         <p>{request.description}</p>
+        <button onClick={() => {}}>Follow</button>
       </div>
     </Link>
   ));

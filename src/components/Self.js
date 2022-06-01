@@ -17,7 +17,7 @@ export default function Self() {
       <h1>Intangible</h1>
       {intangibleList.map((request) => (
         <Link to={`/request/intangible/${request.id}`}>
-          <div>
+          <div className="request-in-list">
             <h1>{request.title}</h1>
             <p>{request.description}</p>
           </div>
@@ -26,7 +26,7 @@ export default function Self() {
       <h1>Tangible</h1>
       {tangibleList.map((request) => (
         <Link to={`/request/tangible/${request.id}`}>
-          <div>
+          <div className="request-in-list">
             <h1>{request.title}</h1>
             <p>{request.description}</p>
             <p>{request.dateTime}</p>
