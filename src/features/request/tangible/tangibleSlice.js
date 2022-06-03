@@ -1,32 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  public: [
-    // {
-    //   id: 0,
-    //   requesterId: 0,
-    //   title: "My First Tangible",
-    //   description: "Description",
-    // },
-    // {
-    //   id: 1,
-    //   requesterId: 0,
-    //   title: "My Second Tangible",
-    //   description: "Description",
-    // },
-    // {
-    //   id: 2,
-    //   requesterId: 1,
-    //   title: "First Tangible Request",
-    //   description: "Description",
-    // },
-    // {
-    //   id: 3,
-    //   requesterId: 1,
-    //   title: "Second Tangible Request",
-    //   description: "Description",
-    // },
-  ],
+  public: [],
+  followed: [],
   self: [],
 };
 
@@ -35,14 +11,16 @@ const tangibleSlice = createSlice({
   initialState,
   reducers: {
     getTangible(state, action) {
-      state.public = action.payload;
+      const { scope, request } = action.payload;
+      state[scope] = request;
     },
-    // addTangible(state, action) {
-    //   state.public.push({ id: 0, requesterId: 0, ...action.payload });
-    // },
+    nextTangible(state, action) {
+      const { scope, request } = action.payload;
+      state[scope].push(...request);
+    },
   },
 });
 
-export const { getTangible /* , addTangible */ } = tangibleSlice.actions;
+export const { getTangible, nextTangible } = tangibleSlice.actions;
 
 export default tangibleSlice.reducer;

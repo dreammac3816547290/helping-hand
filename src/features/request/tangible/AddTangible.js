@@ -1,20 +1,16 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-// import { addTangible } from "./tangibleSlice";
-import { addTangible } from "../../../app/firebase";
+import { addRequest } from "../../../app/firebase";
 
 export default function AddTangible() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dateTime, setDateTime] = useState(""); // date now to string
   const userId = useSelector((state) => state.user.userId);
-  const canAdd = title && description && dateTime && userId;
-  // check if title, description, dateTime is not empty
-  // check if userId exist
+  const canAdd = userId && title && description && dateTime; // check userId, title, description, dateTime
   return (
     <div>
       <input
@@ -39,10 +35,14 @@ export default function AddTangible() {
       <button
         onClick={() => {
           if (canAdd) {
-            dispatch(
-              addTangible({ requesterId: userId, title, description, dateTime })
-            );
-            navigate("/");
+            const request = {
+              requesterId: userId,
+              title,
+              description,
+              dateTime,
+            };
+            addRequest("tangible", userId, request);
+            navigate("/public");
           }
         }}
       >

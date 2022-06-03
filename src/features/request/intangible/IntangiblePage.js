@@ -1,20 +1,19 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function useIntangible(id) {
-  // temporary
-  return useSelector((state) =>
-    state.request.intangible.public.find((request) => request.id === id)
-  );
-}
+import { getRequestPage } from "../../../app/firebase";
 
 export default function IntangiblePage() {
   const params = useParams();
-  const request = useIntangible(params.requestId);
+  const [request, setRequest] = useState({});
+  const { title, description } = request;
+  useEffect(() => {
+    getRequestPage("intangible", params.requestId).then(setRequest);
+  }, []);
   return (
-    <>
-      <h1>{request.title}</h1>
-      <p>{request.description}</p>
-    </>
+    <div>
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </div>
   );
 }

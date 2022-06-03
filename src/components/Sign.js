@@ -1,13 +1,15 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { createUser, signIn } from "../app/firebase";
+import { createUser, logOut, signIn } from "../app/firebase";
 
 export default function Sign() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const canAdd = email && password.length >= 6; // check email & password
+  const canCreate = email && password.length >= 6; // check email & password
+  const userId = useSelector((state) => state.user.userId);
   return (
     <div>
       <input
@@ -26,7 +28,7 @@ export default function Sign() {
       <br />
       <button
         onClick={() => {
-          if (canAdd) {
+          if (canCreate) {
             createUser(email, password);
             navigate("/");
           }
@@ -42,6 +44,7 @@ export default function Sign() {
       >
         Sign In
       </button>
+      {userId && <button onClick={logOut}>Sign Out</button>}
     </div>
   );
 }

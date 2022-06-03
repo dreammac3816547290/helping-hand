@@ -1,21 +1,20 @@
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function useTangible(id) {
-  // temporary
-  return useSelector((state) =>
-    state.request.tangible.public.find((request) => request.id === id)
-  );
-}
+import { getRequestPage } from "../../../app/firebase";
 
 export default function TangiblePage() {
   const params = useParams();
-  const request = useTangible(params.requestId);
+  const [request, setRequest] = useState({});
+  const { title, description, dateTime } = request;
+  useEffect(() => {
+    getRequestPage("tangible", params.requestId).then(setRequest);
+  }, []);
   return (
-    <>
-      <h1>{request.title}</h1>
-      <p>{request.description}</p>
-      <p>{request.dateTime}</p>
-    </>
+    <div>
+      <h1>{title}</h1>
+      <p>{description}</p>
+      <p>{dateTime}</p>
+    </div>
   );
 }

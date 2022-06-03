@@ -9,15 +9,10 @@ import "./index.css";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
 import Sign from "./components/Sign";
-import Public from "./components/Public";
-import Followed from "./components/Followed";
-import Self from "./components/Self";
-
-import Intangible from "./features/request/intangible/Intangible";
-import Tangible from "./features/request/tangible/Tangible";
+import Page from "./components/Page";
+import RequestList from "./features/request/RequestList";
 import IntangiblePage from "./features/request/intangible/IntangiblePage";
 import TangiblePage from "./features/request/tangible/TangiblePage";
-
 import AddRequest from "./features/request/AddRequest";
 import AddIntangible from "./features/request/intangible/AddIntangible";
 import AddTangible from "./features/request/tangible/AddTangible";
@@ -32,12 +27,36 @@ root.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="sign" element={<Sign />} />
-            <Route path="public" element={<Public />}>
-              <Route path="intangible" element={<Intangible />} />
-              <Route path="tangible" element={<Tangible />} />
+            <Route path="public" element={<Page to="/public" />}>
+              <Route
+                path="intangible"
+                element={<RequestList scope="public" type="intangible" />}
+              />
+              <Route
+                path="tangible"
+                element={<RequestList scope="public" type="tangible" />}
+              />
             </Route>
-            <Route path="followed" element={<Followed />} />
-            <Route path="self" element={<Self />} />
+            <Route path="followed" element={<Page to="/followed" />}>
+              <Route
+                path="intangible"
+                element={<RequestList scope="followed" type="intangible" />}
+              />
+              <Route
+                path="tangible"
+                element={<RequestList scope="followed" type="tangible" />}
+              />
+            </Route>
+            <Route path="self" element={<Page to="/self" />}>
+              <Route
+                path="intangible"
+                element={<RequestList scope="self" type="intangible" />}
+              />
+              <Route
+                path="tangible"
+                element={<RequestList scope="self" type="tangible" />}
+              />
+            </Route>
             <Route path="request" element={<Outlet />}>
               <Route
                 path="intangible/:requestId"
@@ -48,6 +67,10 @@ root.render(
             <Route path="add" element={<AddRequest />}>
               <Route path="intangible" element={<AddIntangible />} />
               <Route path="tangible" element={<AddTangible />} />
+            </Route>
+            <Route path="edit" element={<Outlet />}>
+              <Route path="intangible/:requestId" element={null} />
+              <Route path="tangible/:requestId" element={null} />
             </Route>
           </Route>
         </Routes>

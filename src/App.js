@@ -1,30 +1,20 @@
 import React from "react";
 import "./App.css";
 
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 
-import { getFirebaseIntangible } from "./app/firebase";
-import { getFirebaseTangible } from "./app/firebase";
-
 export default function App() {
-  const dispatch = useDispatch();
+  const signIn = useSelector((state) => state.user.userId);
   return (
     <div className="App">
       <Link to="/public">Public</Link>&nbsp;
       <Link to="/followed">Followed</Link>&nbsp;
       <Link to="/self">My Request</Link>&nbsp;
       <Link to="/sign">
-        <button>Sign Up / Sign In</button>
+        <button>Sign</button>
       </Link>
-      <button
-        onClick={() => {
-          dispatch(getFirebaseIntangible());
-          dispatch(getFirebaseTangible());
-        }}
-      >
-        Refresh
-      </button>
+      {signIn ? "Signed in: " + signIn : "Not signed in"}
       <Outlet />
     </div>
   );

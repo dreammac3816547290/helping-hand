@@ -1,14 +1,12 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+
+import Switch from "../../components/Switch";
 
 export default function AddRequest() {
-  const navigate = useNavigate();
   return (
-    <>
-      <select onChange={(event) => navigate(`/add/${event.target.value}`)}>
-        <option value="intangible">Intangible</option>
-        <option value="tangible">Tangible</option>
-      </select>
+    <div>
+      <Switch to="/add" />
       <Outlet />
-    </>
+    </div>
   );
 }

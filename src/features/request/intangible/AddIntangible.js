@@ -1,19 +1,14 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-// import { addIntangible } from "./intangibleSlice";
-import { addIntangible } from "../../../app/firebase";
+import { addRequest } from "../../../app/firebase";
 
 export default function AddIntangible() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const userId = useSelector((state) => state.user.userId);
-  const canAdd = title && description && userId;
-  // check if title, description is not empty
-  // check if userId exist
+  const canAdd = userId && title && description; // check userId, title, description
   return (
     <div>
       <input
@@ -32,9 +27,12 @@ export default function AddIntangible() {
       <button
         onClick={() => {
           if (canAdd) {
-            dispatch(
-              addIntangible({ requesterId: userId, title, description })
-            );
+            const request = {
+              requesterId: userId,
+              title,
+              description,
+            };
+            addRequest("intangible", userId, request);
             navigate("/");
           }
         }}
