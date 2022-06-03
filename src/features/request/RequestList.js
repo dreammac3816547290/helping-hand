@@ -17,7 +17,10 @@ export default function RequestList({ scope, type }) {
     <Request
       request={request}
       isFollowed={follow.includes(request.id)}
-      changeFollow={() => changeFollow(request.id)}
+      changeFollow={(event) => {
+        event.preventDefault(); // prevent Link
+        changeFollow(request.id);
+      }}
     />
   ));
   return <div>{requestBlock}</div>;

@@ -132,7 +132,7 @@ export function useFollow(type) {
         setFollow(doc.data().follow[type])
       );
     return unsubscribe; // remove follow?
-  }, [userId]);
+  }, [userId, type]);
   async function changeFollow(requestId) {
     if (userId) {
       const arrayUpdate = follow.includes(requestId) ? arrayRemove : arrayUnion;
