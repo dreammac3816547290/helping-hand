@@ -14,8 +14,9 @@ import RequestList from "./features/request/RequestList";
 import IntangiblePage from "./features/request/intangible/IntangiblePage";
 import TangiblePage from "./features/request/tangible/TangiblePage";
 import AddRequest from "./features/request/AddRequest";
-import AddIntangible from "./features/request/intangible/AddIntangible";
-import AddTangible from "./features/request/tangible/AddTangible";
+import SetIntangible from "./features/request/intangible/SetIntangible";
+import SetTangible from "./features/request/tangible/SetTangible";
+import Edit from "./components/Edit";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -58,15 +59,18 @@ root.render(
               />
             </Route>
             <Route path="request" element={<Outlet />}>
-              <Route
-                path="intangible/:requestId"
-                element={<IntangiblePage />}
-              />
-              <Route path="tangible/:requestId" element={<TangiblePage />} />
+              <Route path="intangible/:requestId" element={<Outlet />}>
+                <Route index element={<IntangiblePage />} />
+                <Route path="edit" element={<Edit type="intangible" />} />
+              </Route>
+              <Route path="tangible/:requestId" element={<Outlet />}>
+                <Route index element={<TangiblePage />} />
+                <Route path="edit" element={<Edit type="tangible" />} />
+              </Route>
             </Route>
             <Route path="add" element={<AddRequest />}>
-              <Route path="intangible" element={<AddIntangible />} />
-              <Route path="tangible" element={<AddTangible />} />
+              <Route path="intangible" element={<SetIntangible />} />
+              <Route path="tangible" element={<SetTangible />} />
             </Route>
             <Route path="edit" element={<Outlet />}>
               <Route path="intangible/:requestId" element={null} />

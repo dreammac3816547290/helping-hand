@@ -2,13 +2,15 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { addRequest } from "../../../app/firebase";
+import { addRequest, editRequest } from "../../../app/firebase";
+import Tag from "../../../components/Tag";
 
-export default function AddTangible() {
+export default function SetTangible({ previous }) {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [dateTime, setDateTime] = useState(""); // date now to string
+  const [title, setTitle] = useState(previous?.title || "");
+  const [description, setDescription] = useState(previous?.description || "");
+  const [dateTime, setDateTime] = useState(previous?.dateTime || ""); // date now to string
+  const [tagList, setTagList] = useState(previous?.tag || []);
   const userId = useSelector((state) => state.user.userId);
   const canAdd = userId && title && description && dateTime; // check userId, title, description, dateTime
   return (
@@ -31,7 +33,7 @@ export default function AddTangible() {
         value={dateTime}
         onChange={(event) => setDateTime(event.target.value)}
       />
-      <br />
+      <Tag tagList={tagList} setTagList={setTagList} />
       <button
         onClick={() => {
           if (canAdd) {
@@ -40,13 +42,16 @@ export default function AddTangible() {
               title,
               description,
               dateTime,
+              tag: tagList,
             };
-            addRequest("tangible", userId, request);
+            previous
+              ? editRequest("tangible", previous.id, request)
+              : addRequest("tangible", userId, request);
             navigate("/public");
           }
         }}
       >
-        Add Request
+        {previous ? "Edit Request" : "Add Request"}
       </button>
     </div>
   );

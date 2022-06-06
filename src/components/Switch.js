@@ -8,7 +8,10 @@ export default function Switch({ to }) {
   );
   return (
     <Link to={`${to}${isIntangible ? "/tangible" : "/intangible"}`}>
-      <button onClick={() => setIsIntangible(!isIntangible)}>
+      <button
+        className="request-button"
+        onClick={() => setIsIntangible(!isIntangible)}
+      >
         {isIntangible ? "Intangible" : "Tangible"}
       </button>
     </Link>

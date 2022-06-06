@@ -4,3 +4,25 @@
   border-radius: 20px;
   width: 50%;
 }
+
+.request-button {
+  border: none;
+  border-radius: 8px;
+  width: 90px;
+  height: 30px;
+  background: #6600bb;
+  outline: 3px solid #6600bb00;
+  outline-offset: 3px;
+  font-size: 15px;
+  color: #ffffff;
+  transition: outline 0.2s;
+}
+
+.request-button:hover {
+  cursor: pointer;
+  outline: 3px solid #6600bbff;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}

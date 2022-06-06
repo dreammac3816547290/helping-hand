@@ -131,7 +131,7 @@ export function useFollow(type) {
       onSnapshot(doc(db, "user", userId), (doc) =>
         setFollow(doc.data().follow[type])
       );
-    return unsubscribe; // remove follow?
+    return unsubscribe || undefined; // remove follow?
   }, [userId, type]);
   async function changeFollow(requestId) {
     if (userId) {
@@ -222,3 +222,14 @@ export async function addRequest(type, userId, request) {
     console.error("Error adding document: ", e);
   }
 }
+
+export async function editRequest(type, requestId, request) {
+  try {
+    await updateDoc(doc(db, type, requestId), request);
+    console.log("Document edited with ID: ", requestId);
+  } catch (e) {
+    console.error("Error editing document: ", e);
+  }
+}
+
+export async function getTags() {}
