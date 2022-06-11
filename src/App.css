@@ -26,3 +26,53 @@
 .capitalize {
   text-transform: capitalize;
 }
+
+.tag {
+  margin: 5px 10px;
+  border-radius: 10px;
+  background-color: yellow;
+}
+
+.search {
+  border-radius: 20px;
+  width: 40%;
+  padding: 0 6px;
+  background: #ffa500;
+  transition: height 0.5s;
+}
+
+.search.off {
+  height: 50px;
+  overflow: hidden;
+}
+
+.search.on {
+  height: 200px;
+  overflow: auto;
+}
+
+input[type="text"] {
+  margin: 6px 0;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 3px 10px;
+  width: 50%;
+  height: 30px;
+}
+
+textarea {
+  margin: 6px 0;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 8px 10px;
+  min-width: 50%;
+  width: 50%;
+  min-height: 50px;
+  height: 30px;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: red;
+}

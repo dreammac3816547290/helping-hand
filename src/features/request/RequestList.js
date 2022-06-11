@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useOutletContext } from "react-router-dom";
 
 import { getRequest, useFollow } from "../../app/firebase";
 import IntangibleRequest from "./intangible/IntangibleRequest";
 import TangibleRequest from "./tangible/TangibleRequest";
 
 export default function RequestList({ scope, type }) {
+  const searchProps = useOutletContext(); // checks
   const userId = useSelector((state) => state.user.userId);
   useEffect(() => {
     userId && getRequest(scope, type, userId);

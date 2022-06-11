@@ -208,6 +208,8 @@ export async function nextRequest(scope, type, userId) {
   store.dispatch(next({ scope, request }));
 }
 
+// export async function filterRequest(scope, type, userId, predicate) {}
+
 export async function addRequest(type, userId, request) {
   try {
     const docRef = await addDoc(collection(db, type), {
@@ -232,4 +234,4 @@ export async function editRequest(type, requestId, request) {
   }
 }
 
-export async function getTags() {}
+// export async function getTags() {}
