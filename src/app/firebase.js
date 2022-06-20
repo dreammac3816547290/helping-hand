@@ -234,4 +234,10 @@ export async function editRequest(type, requestId, request) {
   }
 }
 
+export async function addComment(type, userId, requestId, comment) {
+  await updateDoc(doc(db, type, requestId), {
+    comment: arrayUnion({ userId, comment }),
+  });
+}
+
 // export async function getTags() {}

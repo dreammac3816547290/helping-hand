@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 
-import { getRequestPage } from "../../../app/firebase";
+import { addComment, getRequestPage } from "../../../app/firebase";
 
 export default function IntangiblePage() {
+  const userId = useSelector((state) => state.user.userId); // is it necessary
+  const [comment, setComment] = useState("");
+
   const params = useParams();
   const location = useLocation();
   const [request, setRequest] = useState({});
-  const { title, description, tag: tagList } = request;
+  const { title, description, tag: tagList, comment: commentList } = request;
   useEffect(() => {
     getRequestPage("intangible", params.requestId).then(setRequest);
   }, []);
@@ -17,6 +21,30 @@ export default function IntangiblePage() {
       <p>{description}</p>
       {tagList}
       <Link to={`${location.pathname}/edit`}>Edit</Link>
+
+      {commentList?.map(({ userId, comment }) => (
+        <div>
+          {userId}
+          {comment}
+        </div>
+      ))}
+      <input
+        type="text"
+        placeholder="Comment"
+        value={comment}
+        onChange={(event) => setComment(event.target.value)}
+      />
+      <button
+        onClick={() => {
+          addComment("intangible", userId, params.requestId, comment);
+          setComment("");
+          // refresh page after adding comment
+          // what if user: null
+          // check if comment not empty
+        }}
+      >
+        Send
+      </button>
     </div>
   );
 }
