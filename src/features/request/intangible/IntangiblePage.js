@@ -16,35 +16,38 @@ export default function IntangiblePage() {
     getRequestPage("intangible", params.requestId).then(setRequest);
   }, []);
   return (
-    <div>
+    <div className="request-page">
       <h1>{title}</h1>
       <p>{description}</p>
       {tagList}
       <Link to={`${location.pathname}/edit`}>Edit</Link>
 
-      {commentList?.map(({ userId, comment }) => (
-        <div>
-          {userId}
-          {comment}
-        </div>
-      ))}
-      <input
-        type="text"
-        placeholder="Comment"
-        value={comment}
-        onChange={(event) => setComment(event.target.value)}
-      />
-      <button
-        onClick={() => {
-          addComment("intangible", userId, params.requestId, comment);
-          setComment("");
-          // refresh page after adding comment
-          // what if user: null
-          // check if comment not empty
-        }}
-      >
-        Send
-      </button>
+      <div className="comment">
+        {commentList?.map(({ userId, comment }) => (
+          <div>
+            {userId}
+            {comment}
+            <hr />
+          </div>
+        ))}
+        <input
+          type="text"
+          placeholder="Comment"
+          value={comment}
+          onChange={(event) => setComment(event.target.value)}
+        />
+        <button
+          onClick={() => {
+            addComment("intangible", userId, params.requestId, comment);
+            setComment("");
+            // refresh page after adding comment
+            // what if user: null
+            // check if comment not empty
+          }}
+        >
+          Send
+        </button>
+      </div>
     </div>
   );
 }

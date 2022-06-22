@@ -12,7 +12,7 @@ export default function TangiblePage() {
     getRequestPage("tangible", params.requestId).then(setRequest);
   }, []);
   return (
-    <div>
+    <div className="request-page">
       <h1>{title}</h1>
       <p>{description}</p>
       <p>{dateTime}</p>

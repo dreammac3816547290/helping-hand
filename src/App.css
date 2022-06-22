@@ -76,3 +76,16 @@ textarea {
   flex-wrap: wrap;
   background-color: red;
 }
+
+.request-page {
+  background-color: #e1e1e1;
+  border-radius: 40px;
+  padding: 20px;
+  margin: 40px;
+}
+
+.comment {
+  border-radius: 25px;
+  background-color: rgb(210, 210, 210);
+  padding: 10px;
+}
