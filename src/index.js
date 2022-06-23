@@ -87,12 +87,12 @@ root.render(
               </Route>
             </Route>
             <Route path="add" element={<AddRequest />}>
+              <Route
+                index
+                element={<Navigate to="/add/intangible" replace />}
+              />
               <Route path="intangible" element={<SetIntangible />} />
               <Route path="tangible" element={<SetTangible />} />
-            </Route>
-            <Route path="edit" element={<Outlet />}>
-              <Route path="intangible/:requestId" element={null} />
-              <Route path="tangible/:requestId" element={null} />
             </Route>
           </Route>
         </Routes>
