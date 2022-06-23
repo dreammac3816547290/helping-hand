@@ -1,7 +1,14 @@
-body {
-  /* background-color: rgb(255, 180, 120); */
-  padding: 0;
+h1 {
   margin: 0;
+}
+
+button {
+  border: none;
+  padding: 0;
+  background: initial;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
 }
 
 a {
@@ -10,46 +17,74 @@ a {
 }
 
 .nav {
-  background: linear-gradient(135deg, purple, red, orange);
-  color: white;
-  padding: 20px;
+  padding: 15px;
+  background: linear-gradient(135deg, #800080, #ff0000, #ffa500);
+  color: #ffffff;
 }
 
-h1 {
-  margin-top: 0;
-  margin-bottom: 0;
+.nav-button {
+  position: relative;
+  margin: 10px 30px 0 0;
+  transition: text-shadow 0.25s;
+}
+
+.nav-button:hover {
+  text-shadow: 0px 0px 8px white, 0px 0px 8px white;
+}
+
+.nav-button:hover::after {
+  position: absolute;
+  right: -15px;
+  content: "❯";
+}
+
+.profile {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  outline: 1px solid white;
+  transition: box-shadow 0.25s;
+}
+
+.profile:hover {
+  cursor: pointer;
+  box-shadow: 0 0 8px 4px #ffffff;
 }
 
 .request-in-list {
-  margin: 20px;
-  border: 1px solid;
+  margin: 20px auto;
+  border: 1px solid #808080;
   border-radius: 20px;
-  width: 50%;
-  background-color: rgb(225, 225, 225);
   padding: 20px;
+  width: 50%;
+  background: #f0f0f0;
   transition: box-shadow 0.25s;
 }
 
 .request-in-list:hover {
-  box-shadow: 0 0 10px 2px rgb(200, 200, 200);
+  box-shadow: 0 0 10px 2px #c8c8c8;
 }
 
 .request-button {
-  border: none;
-  border-radius: 8px;
-  width: 90px;
-  height: 30px;
-  background: #6600bb;
-  outline: 3px solid #6600bb00;
-  outline-offset: 3px;
+  margin: 20px;
+  border-radius: 15px;
+  padding: 4px;
+  width: 100px;
+  height: 36px;
+  background: #6800bd;
   font-size: 15px;
   color: #ffffff;
-  transition: outline 0.2s;
+  transition: background 0.4s, box-shadow 0.4s;
+  outline: 0 0 1px black;
 }
 
 .request-button:hover {
   cursor: pointer;
-  outline: 3px solid #6600bbff;
+  background: hsl(273, 100%, 50%);
+  box-shadow: 0 0 10px 3px rgb(150, 150, 150);
 }
 
 .capitalize {

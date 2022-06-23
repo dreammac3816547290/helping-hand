@@ -6,7 +6,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
 
 import Sign from "./components/Sign";
 import Page from "./components/Page";
@@ -30,6 +36,10 @@ root.render(
             <Route path="sign" element={<Sign />} />
             <Route path="public" element={<Page to="/public" />}>
               <Route
+                index
+                element={<Navigate to="/public/intangible" replace />}
+              />
+              <Route
                 path="intangible"
                 element={<RequestList scope="public" type="intangible" />}
               />
@@ -40,6 +50,10 @@ root.render(
             </Route>
             <Route path="followed" element={<Page to="/followed" />}>
               <Route
+                index
+                element={<Navigate to="/followed/intangible" replace />}
+              />
+              <Route
                 path="intangible"
                 element={<RequestList scope="followed" type="intangible" />}
               />
@@ -49,6 +63,10 @@ root.render(
               />
             </Route>
             <Route path="self" element={<Page to="/self" />}>
+              <Route
+                index
+                element={<Navigate to="/self/intangible" replace />}
+              />
               <Route
                 path="intangible"
                 element={<RequestList scope="self" type="intangible" />}

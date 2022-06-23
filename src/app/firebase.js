@@ -28,6 +28,7 @@ import {
   onSnapshot,
   limit,
 } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -35,7 +36,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import store from "./store";
-import { setUserId } from "../features/user/userSlice";
+import { setUserProfile } from "../features/user/userSlice";
 import {
   getIntangible,
   nextIntangible,
@@ -62,6 +63,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 export function createUser(email, password) {
   createUserWithEmailAndPassword(auth, email, password)
@@ -108,11 +110,13 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
-    store.dispatch(setUserId(user.uid));
+    store.dispatch(
+      setUserProfile({ userId: user.uid, userPhotoUrl: user.photoURL })
+    );
     // ...
   } else {
     // User is signed out
-    store.dispatch(setUserId(null)); // remove data?
+    store.dispatch(setUserProfile(null, null)); // remove data?
     // ...
   }
 });
@@ -239,5 +243,7 @@ export async function addComment(type, userId, requestId, comment) {
     comment: arrayUnion({ userId, comment }),
   });
 }
+
+export async function uploadProfilePhoto() {}
 
 // export async function getTags() {}
