@@ -28,7 +28,13 @@ import {
   onSnapshot,
   limit,
 } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -45,6 +51,7 @@ import {
   getTangible,
   nextTangible,
 } from "../features/request/tangible/tangibleSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -214,13 +221,22 @@ export async function nextRequest(scope, type, userId) {
 
 // export async function filterRequest(scope, type, userId, predicate) {}
 
-export async function addRequest(type, userId, request) {
+export async function addRequest(type, userId, request, imageFile) {
   try {
     const docRef = await addDoc(collection(db, type), {
       ...request,
       timestamp: serverTimestamp(),
     });
     console.log("Document written with ID: ", docRef.id);
+    const imageSrc = [];
+    for (const image of imageFile) {
+      const id = nanoid();
+      const metadata = { contentType: image.type };
+      const storageRef = ref(storage, `${type}/${docRef.id}/${id}`, metadata);
+      const snapshot = await uploadBytes(storageRef, image);
+      imageSrc.push(await getDownloadURL(storageRef));
+    }
+    await updateDoc(doc(db, type, docRef.id), { imageSrc });
     await updateDoc(doc(db, "user", userId), {
       [`add.${type}`]: arrayUnion(docRef.id),
     });
@@ -229,8 +245,26 @@ export async function addRequest(type, userId, request) {
   }
 }
 
-export async function editRequest(type, requestId, request) {
+export async function editRequest(
+  type,
+  requestId,
+  request,
+  imageSrc,
+  removed,
+  imageFile
+) {
   try {
+    for (const removedURL of removed) {
+      await deleteObject(ref(storage, removedURL));
+    }
+    for (const image of imageFile) {
+      const id = nanoid();
+      const metadata = { contentType: image.type };
+      const storageRef = ref(storage, `${type}/${requestId}/${id}`, metadata);
+      const snapshot = await uploadBytes(storageRef, image);
+      imageSrc.push(await getDownloadURL(storageRef));
+    }
+    request.imageSrc = imageSrc;
     await updateDoc(doc(db, type, requestId), request);
     console.log("Document edited with ID: ", requestId);
   } catch (e) {
@@ -244,6 +278,16 @@ export async function addComment(type, userId, requestId, comment) {
   });
 }
 
-export async function uploadProfilePhoto() {}
+export async function uploadProfilePicture(userId, file) {
+  // catch error later
+  try {
+    const storageRef = ref(storage, `users/${userId}/profilePicture.png`);
+    const snapshot = await uploadBytes(storageRef, file);
+    const url = getDownloadURL(storageRef);
+    return url;
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 // export async function getTags() {}

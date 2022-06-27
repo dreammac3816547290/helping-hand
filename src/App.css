@@ -38,7 +38,7 @@ a {
   content: "❯";
 }
 
-.profile {
+.profile-small {
   position: absolute;
   top: 25px;
   right: 25px;
@@ -49,9 +49,18 @@ a {
   transition: box-shadow 0.25s;
 }
 
-.profile:hover {
+.profile-small:hover {
   cursor: pointer;
   box-shadow: 0 0 8px 4px #ffffff;
+}
+
+.profile-big {
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #000000;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
 }
 
 .request-in-list {
@@ -159,4 +168,9 @@ textarea {
   border-radius: 25px;
   background-color: rgb(210, 210, 210);
   padding: 10px;
+}
+
+.thumbnail {
+  width: 200px;
+  height: 200px;
 }

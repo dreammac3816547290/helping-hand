@@ -1,53 +1,31 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
 
-import { addComment, getRequestPage } from "../../../app/firebase";
+import { getRequestPage } from "../../../app/firebase";
+import Comment from "../../../components/Comment";
 
 export default function IntangiblePage() {
-  const userId = useSelector((state) => state.user.userId); // is it necessary
-  const [comment, setComment] = useState("");
-
   const params = useParams();
   const location = useLocation();
   const [request, setRequest] = useState({});
-  const { title, description, tag: tagList, comment: commentList } = request;
+  const { title, description, tag: tagList, comment, imageSrc } = request;
   useEffect(() => {
     getRequestPage("intangible", params.requestId).then(setRequest);
-  }, []);
+  }, [params.requestId]);
   return (
     <div className="request-page">
       <h1>{title}</h1>
+      {imageSrc?.map((src) => (
+        <img className="thumbnail" src={src} />
+      ))}
       <p>{description}</p>
       {tagList}
       <Link to={`${location.pathname}/edit`}>Edit</Link>
-
-      <div className="comment">
-        {commentList?.map(({ userId, comment }) => (
-          <div>
-            {userId}
-            {comment}
-            <hr />
-          </div>
-        ))}
-        <input
-          type="text"
-          placeholder="Comment"
-          value={comment}
-          onChange={(event) => setComment(event.target.value)}
-        />
-        <button
-          onClick={() => {
-            addComment("intangible", userId, params.requestId, comment);
-            setComment("");
-            // refresh page after adding comment
-            // what if user: null
-            // check if comment not empty
-          }}
-        >
-          Send
-        </button>
-      </div>
+      <Comment
+        type="intangible"
+        requestId={params.requestId}
+        commentList={comment}
+      />
     </div>
   );
 }

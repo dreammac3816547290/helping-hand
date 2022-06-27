@@ -23,7 +23,7 @@ export default function App() {
         {signIn ? "Signed in: " + signIn + photoURL : "Not signed in"}
         <Link to="/sign">
           <img
-            className="profile"
+            className="profile-small"
             src="https://static.remove.bg/remove-bg-web/913b22608288cd03cc357799d0d4594e2d1c6b41/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg"
             alt="NO IMAGE"
           />

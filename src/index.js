@@ -33,6 +33,7 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
+            <Route index element={<Navigate to="/public" replace />} />
             <Route path="sign" element={<Sign />} />
             <Route path="public" element={<Page to="/public" />}>
               <Route

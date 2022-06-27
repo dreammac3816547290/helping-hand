@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { addRequest, editRequest } from "../../../app/firebase";
+import Photo from "../../../components/Photo";
 import Tag from "../../../components/Tag";
 
 export default function SetTangible({ previous }) {
@@ -13,6 +14,19 @@ export default function SetTangible({ previous }) {
   const [tagList, setTagList] = useState(previous?.tag || []);
   const userId = useSelector((state) => state.user.userId);
   const canAdd = userId && title && description && dateTime; // check userId, title, description, dateTime
+
+  const [imageSrc, setImageSrc] = useState(previous?.imageSrc || []);
+  const [removed, setRemoved] = useState([]);
+  const [imageFile, setImageFile] = useState([]);
+  const photoProps = {
+    imageSrc,
+    setImageSrc,
+    removed,
+    setRemoved,
+    imageFile,
+    setImageFile,
+  };
+
   return (
     <div>
       <input
@@ -22,6 +36,7 @@ export default function SetTangible({ previous }) {
         onChange={(event) => setTitle(event.target.value)}
       />
       <br />
+      <Photo {...photoProps} />
       <textarea
         placeholder="Description"
         value={description}
@@ -45,8 +60,15 @@ export default function SetTangible({ previous }) {
               tag: tagList,
             };
             previous
-              ? editRequest("tangible", previous.id, request)
-              : addRequest("tangible", userId, request);
+              ? editRequest(
+                  "tangible",
+                  previous.id,
+                  request,
+                  imageSrc,
+                  removed,
+                  imageFile
+                )
+              : addRequest("tangible", userId, request, imageFile);
             navigate("/public");
           }
         }}
